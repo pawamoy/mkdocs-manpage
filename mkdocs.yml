@@ -92,7 +92,7 @@ markdown_extensions:
 - pymdownx.tasklist:
     custom_checkbox: true
 - toc:
-    permalink: "¤"
+    permalink: !ENV [PERMALINK, "¤"]
 
 plugins:
 - search
@@ -113,10 +113,22 @@ plugins:
           merge_init_into_class: true
           docstring_options:
             ignore_init_summary: true
+          show_source: !ENV [SHOW_SOURCE, true]
 - git-committers:
     enabled: !ENV [DEPLOY, false]
     repository: pawamoy/mkdocs-manpage
-
+- manpage:
+    enabled: !ENV [MANPAGE, false]
+    pages:
+    - index.md
+    - changelog.md
+    - credits.md
+    - license.md
+    - contributing.md
+    - code_of_conduct.md
+    - insiders/index.md
+    - insiders/installation.md
+    - insiders/changelog.md
 - minify:
     minify_html: !ENV [DEPLOY, false]
 

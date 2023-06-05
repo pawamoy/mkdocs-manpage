@@ -300,3 +300,18 @@ def test(ctx: Context, match: str = "") -> None:
         pytest.run("-n", "auto", "tests", config_file="config/pytest.ini", select=match),
         title=pyprefix("Running tests"),
     )
+
+
+@duty(aliases=["man"])
+def manpage(ctx: Context) -> None:
+    """Run the test suite.
+
+    Parameters:
+        ctx: The context instance (passed automatically).
+    """
+    os.environ["MANPAGE"] = "true"
+    os.environ["SHOW_SOURCE"] = "false"
+    os.environ["PERMALINK"] = "false"
+    os.environ["DEPLOY"] = "false"
+    ctx.run(mkdocs.build(), title="Building docs and manpage")
+    ctx.run("man ./site/manpage.1", capture=False)
