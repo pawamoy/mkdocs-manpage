@@ -1,0 +1,4 @@
+* [<code class="doc-symbol doc-symbol-nav doc-symbol-module"></code> mkdocs_manpage](mkdocs_manpage/index.md)
+    * [<code class="doc-symbol doc-symbol-nav doc-symbol-module"></code> config](mkdocs_manpage/config.md)
+    * [<code class="doc-symbol doc-symbol-nav doc-symbol-module"></code> logger](mkdocs_manpage/logger.md)
+    * [<code class="doc-symbol doc-symbol-nav doc-symbol-module"></code> plugin](mkdocs_manpage/plugin.md)
