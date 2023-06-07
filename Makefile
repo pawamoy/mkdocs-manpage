@@ -17,6 +17,7 @@ BASIC_DUTIES = \
 	docs \
 	docs-deploy \
 	format \
+	manpage \
 	release
 
 QUALITY_DUTIES = \

@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
-import os
 import subprocess
+import sys
 import tempfile
+from datetime import date
+from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
 
@@ -12,10 +14,17 @@ from mkdocs.plugins import BasePlugin
 
 from mkdocs_manpage.config import PluginConfig
 from mkdocs_manpage.logger import get_logger
+from mkdocs_manpage.preprocess import preprocess
+
+if sys.version_info < (3, 8):
+    import importlib_metadata as metadata
+else:
+    from importlib import metadata
 
 if TYPE_CHECKING:
     from typing import Any
 
+    from mkdocs.config.base import Config
     from mkdocs.config.defaults import MkDocsConfig
     from mkdocs.structure.pages import Page
 
@@ -25,12 +34,8 @@ logger = get_logger(__name__)
 
 def _log_pandoc_output(output: str) -> None:
     for line in output.split("\n"):
-        if line.startswith("[INFO]"):
-            logger.debug(f"pandoc: {line[7:]}")
-        elif line.startswith("[WARNING]"):
-            logger.warning(f"pandoc: {line[10:]}")
-        else:
-            logger.debug(f"pandoc: {line[8:]}")
+        if line.strip():
+            logger.debug(f"pandoc: {line.strip()}")
 
 
 class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
@@ -45,8 +50,26 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
     for more information about its plugin system.
     """
 
+    mkdocs_config: MkDocsConfig
+
     def __init__(self) -> None:  # noqa: D107
         self.pages: dict[str, str] = {}
+
+    def on_config(self, config: MkDocsConfig) -> Config | None:
+        """Save the global MkDocs configuration.
+
+        Hook for the [`on_config` event](https://www.mkdocs.org/user-guide/plugins/#on_config).
+        In this hook, we save the global MkDocs configuration into an instance variable,
+        to re-use it later.
+
+        Arguments:
+            config: The MkDocs config object.
+
+        Returns:
+            The same, untouched config.
+        """
+        self.mkdocs_config = config
+        return config
 
     def on_page_content(self, html: str, *, page: Page, **kwargs: Any) -> str | None:  # noqa: ARG002
         """Record pages contents.
@@ -89,12 +112,38 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
                     logger.error(f"No page with path {page}")  # noqa: TRY400
         else:
             pages = list(self.pages.values())
-        combined = "\n\n".join(pages)
-        output_file = os.path.join(config.site_dir, "manpage.1")
-        with tempfile.NamedTemporaryFile("w", prefix="mkdocs_manpage_", suffix=".html") as temp_file:
-            temp_file.write(combined)
+        html = "\n\n".join(pages)
+
+        if self.config.preprocess:
+            html = preprocess(html, self.config.preprocess)
+
+        output_file = Path(config.site_dir, "manpage.1")
+        with tempfile.NamedTemporaryFile("w", prefix="mkdocs_manpage_", suffix=".1.html") as temp_file:
+            temp_file.write(html)
+            pandoc_variables = [
+                f"title:{self.mkdocs_config.site_name}",
+                "section:1",
+                f"date:{date.today().strftime('%Y-%m-%d')}",  # noqa: DTZ011
+                f"footer:mkdocs-manpage v{metadata.version('mkdocs-manpage')}",
+                "header:User Commands",
+            ]
+            pandoc_options = [
+                "--verbose",
+                "--standalone",
+                "--wrap=none",
+            ]
+            pandoc_command = [
+                pandoc,
+                *pandoc_options,
+                *[f"-V{var}" for var in pandoc_variables],
+                "--to",
+                "man",
+                temp_file.name,
+                "-o",
+                str(output_file),
+            ]
             pandoc_process = subprocess.run(
-                [pandoc, "--verbose", "--standalone", "--to", "man", temp_file.name, "-o", output_file],  # noqa: S603
+                pandoc_command,  # noqa: S603
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,

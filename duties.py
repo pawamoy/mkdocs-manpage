@@ -309,9 +309,5 @@ def manpage(ctx: Context) -> None:
     Parameters:
         ctx: The context instance (passed automatically).
     """
-    os.environ["MANPAGE"] = "true"
-    os.environ["SHOW_SOURCE"] = "false"
-    os.environ["PERMALINK"] = "false"
-    os.environ["DEPLOY"] = "false"
     ctx.run(mkdocs.build(), title="Building docs and manpage")
     ctx.run("man ./site/manpage.1", capture=False)

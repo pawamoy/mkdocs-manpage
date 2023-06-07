@@ -27,7 +27,15 @@ classifiers = [
     "Topic :: Utilities",
     "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [
+    "importlib-metadata>=4; python_version < '3.8'"
+]
+
+[project.optional-dependencies]
+preprocess = [
+    "beautifulsoup4>=4.12",
+    "lxml>=4.9",
+]
 
 [project.urls]
 Homepage = "https://pawamoy.github.io/mkdocs-manpage"
