@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from itertools import chain
 from pathlib import Path
-from textwrap import dedent
 from typing import Iterable, cast
 from urllib.error import HTTPError
 from urllib.parse import urljoin
@@ -101,7 +100,7 @@ def load_goals(data: str, funding: int = 0, project: Project | None = None) -> d
                 Feature(
                     name=feature_data["name"],
                     ref=feature_data["ref"],
-                    since=feature_data["since"]
+                    since=feature_data.get("since")
                     and datetime.strptime(feature_data["since"], "%Y/%m/%d").date(),  # noqa: DTZ007
                     project=project,
                 )
@@ -185,9 +184,9 @@ sponsors: list[dict] = load_json(f"{data_url}/sponsors.json")  # type: ignore[as
 current_funding = numbers["total"]
 sponsors_count = numbers["count"]
 goals = funding_goals(data_source, funding=current_funding)
-all_features = feature_list(goals.values())
-completed_features = sorted(
-    (ft for ft in all_features if ft.since),
+ongoing_goals = [goal for goal in goals.values() if not goal.complete]
+unreleased_features = sorted(
+    (ft for ft in feature_list(ongoing_goals) if ft.since),
     key=lambda ft: cast(date, ft.since),
     reverse=True,
 )
