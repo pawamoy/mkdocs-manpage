@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import subprocess
-import sys
 import tempfile
 from datetime import date
+from importlib import metadata
 from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
@@ -16,15 +16,9 @@ from mkdocs_manpage.config import PluginConfig
 from mkdocs_manpage.logger import get_logger
 from mkdocs_manpage.preprocess import preprocess
 
-if sys.version_info < (3, 8):
-    import importlib_metadata as metadata
-else:
-    from importlib import metadata
-
 if TYPE_CHECKING:
     from typing import Any
 
-    from mkdocs.config.base import Config
     from mkdocs.config.defaults import MkDocsConfig
     from mkdocs.structure.pages import Page
 
@@ -55,7 +49,7 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
     def __init__(self) -> None:  # noqa: D107
         self.pages: dict[str, str] = {}
 
-    def on_config(self, config: MkDocsConfig) -> Config | None:
+    def on_config(self, config: MkDocsConfig) -> MkDocsConfig | None:
         """Save the global MkDocs configuration.
 
         Hook for the [`on_config` event](https://www.mkdocs.org/user-guide/plugins/#on_config).
@@ -147,6 +141,7 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
+                check=False,
             )
         _log_pandoc_output(pandoc_process.stdout)
         logger.info(f"Generated manpage at {output_file}")
