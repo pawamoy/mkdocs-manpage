@@ -27,9 +27,7 @@ classifiers = [
     "Topic :: Utilities",
     "Typing :: Typed",
 ]
-dependencies = [
-    "importlib-metadata>=4; python_version < '3.8'"
-]
+dependencies = []
 
 [project.optional-dependencies]
 preprocess = [
