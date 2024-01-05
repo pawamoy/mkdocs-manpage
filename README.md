@@ -4,7 +4,7 @@
 [![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://pawamoy.github.io/mkdocs-manpage/)
 [![pypi version](https://img.shields.io/pypi/v/mkdocs-manpage.svg)](https://pypi.org/project/mkdocs-manpage/)
 [![gitpod](https://img.shields.io/badge/gitpod-workspace-blue.svg?style=flat)](https://gitpod.io/#https://github.com/pawamoy/mkdocs-manpage)
-[![gitter](https://badges.gitter.im/join%20chat.svg)](https://gitter.im/mkdocs-manpage/community)
+[![gitter](https://badges.gitter.im/join%20chat.svg)](https://app.gitter.im/#/room/#mkdocs-manpage:gitter.im)
 
 MkDocs plugin to generate a manpage from the documentation site.
 
@@ -15,11 +15,13 @@ Pandoc must be [installed](https://pandoc.org/installing.html) and available as 
 ## Installation
 
 With `pip`:
+
 ```bash
 pip install mkdocs-manpage[preprocess]
 ```
 
 With [`pipx`](https://github.com/pipxproject/pipx):
+
 ```bash
 python3.8 -m pip install --user pipx
 pipx install mkdocs-manpage[preprocess]

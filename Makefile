@@ -19,7 +19,8 @@ BASIC_DUTIES = \
 	docs-deploy \
 	format \
 	manpage \
-	release
+	release \
+	vscode
 
 QUALITY_DUTIES = \
 	check-quality \
