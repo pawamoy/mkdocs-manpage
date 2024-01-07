@@ -60,8 +60,8 @@ editable-backend = "editables"
 
 [tool.pdm.dev-dependencies]
 duty = ["duty>=0.10"]
-ci-quality = ["mkdocs-manpage[duty,docs,quality,typing,security]"]
-ci-tests = ["mkdocs-manpage[duty,tests]"]
+ci-quality = ["mkdocs-manpage[duty,docs,quality,typing,security,preprocess]"]
+ci-tests = ["mkdocs-manpage[duty,tests,docs,preprocess]"]
 docs = [
     "black>=23.9",
     "markdown-callouts>=0.3",
