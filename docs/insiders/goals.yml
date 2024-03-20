@@ -5,3 +5,12 @@ goals:
     - name: "[Project] MkDocs plugin to generate a manpage from the documentation site"
       ref: /
       since: 2023/06/06
+  1000:
+    name: GraviFridge Fluid Renewal
+    features: []
+  1500:
+    name: HyperLamp Navigation Tips
+    features: []
+  2000:
+    name: FusionDrive Ejection Configuration
+    features: []
