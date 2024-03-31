@@ -34,9 +34,16 @@ pipx install mkdocs-manpage[preprocess]
 plugins:
 - manpage:
     pages:
-    - index.md
-    - usage.md
-    - reference/api.md
+    - title: My Project  # defaults to site name
+      output: share/man/man1/my-project.1
+      inputs:
+      - index.md
+      - usage.md
+    - title: my-project API
+      header: Python Library APIs  # defaults to common header for section 3 (see `man man`)
+      output: share/man/man3/my_project.3
+      inputs:
+      - reference/my_project/*.md
 ```
 
 To enable/disable the plugin with an environment variable:
@@ -53,9 +60,6 @@ Then set the environment variable and run MkDocs:
 ```bash
 MANPAGE=true mkdocs build
 ```
-
-The manpage will be written into the root of the site directory
-and named `manpage.1`.
 
 ### Pre-processing HTML
 
@@ -94,7 +98,7 @@ def to_remove(tag: Tag) -> bool:
     return False
 
 
-def preprocess(soup: BeautifulSoup) -> None:
+def preprocess(soup: BeautifulSoup, output: str) -> None:
     for element in soup.find_all(to_remove):
         element.decompose()
 ```

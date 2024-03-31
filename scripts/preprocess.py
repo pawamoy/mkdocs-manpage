@@ -27,11 +27,12 @@ def to_remove(tag: Tag) -> bool:
     return False
 
 
-def preprocess(soup: Soup) -> None:
+def preprocess(soup: Soup, output: str) -> None:  # noqa: ARG001
     """Pre-process the soup by removing elements.
 
     Parameters:
         soup: The soup to modify.
+        output: The manpage output path.
     """
     for element in soup.find_all(to_remove):
         element.decompose()

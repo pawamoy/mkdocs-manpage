@@ -24,7 +24,7 @@ def _load_module(module_path: str) -> ModuleType:
     raise RuntimeError("Spec or loader is null")
 
 
-def preprocess(html: str, module_path: str) -> str:
+def preprocess(html: str, module_path: str, output: str) -> str:
     """Pre-process HTML with user-defined functions.
 
     Parameters:
@@ -32,6 +32,7 @@ def preprocess(html: str, module_path: str) -> str:
         module_path: The path of a Python module containing a `preprocess` function.
             The function must accept one and only one argument called `soup`.
             The `soup` argument is an instance of [`bs4.BeautifulSoup`][].
+        output: The output path of the relevant manual page.
 
     Returns:
         The processed HTML.
@@ -49,7 +50,7 @@ def preprocess(html: str, module_path: str) -> str:
         raise PluginError(f"Could not load module: {error}") from error
     soup = BeautifulSoup(html, "lxml")
     try:
-        module.preprocess(soup)
+        module.preprocess(soup, output)
     except Exception as error:  # noqa: BLE001
         raise PluginError(f"Could not pre-process HTML: {error}") from error
     return str(soup)

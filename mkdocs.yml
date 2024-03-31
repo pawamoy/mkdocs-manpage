@@ -141,15 +141,20 @@ plugins:
 - manpage:
     preprocess: scripts/preprocess.py
     pages:
-    - index.md
-    - changelog.md
-    - credits.md
-    - license.md
-    - contributing.md
-    - code_of_conduct.md
-    - insiders/index.md
-    - insiders/installation.md
-    - insiders/changelog.md
+    - title: MkDocs Manpage
+      header: MkDocs plugins
+      output: share/man/man1/mkdocs-manpage.1
+      inputs:
+      - index.md
+      - changelog.md
+      - contributing.md
+      - credits.md
+      - license.md
+    - title: mkdocs-manpage API
+      header: Python Library APIs
+      output: share/man/man3/mkdocs_manpage.3
+      inputs:
+      - reference/mkdocs_manpage/*.md
 - minify:
     minify_html: !ENV [DEPLOY, false]
 - group:
