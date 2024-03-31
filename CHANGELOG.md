@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [2.0.0](https://github.com/pawamoy/mkdocs-manpage/releases/tag/2.0.0) - 2024-03-31
+
+<small>[Compare with 1.0.0](https://github.com/pawamoy/mkdocs-manpage/compare/1.0.0...2.0.0)</small>
+
+### Features
+
+- Support multiple outputs, glob pattern for inputs, custom title and header ([b45a81e](https://github.com/pawamoy/mkdocs-manpage/commit/b45a81ee927d50aa038a183e5a39e92721dcc88b) by Timothée Mazzucotelli). Breaking changes: configuration format in `mkdocs.yml` and public API changed.
+
 ## [1.0.0](https://github.com/pawamoy/mkdocs-manpage/releases/tag/1.0.0) - 2024-01-06
 
 <small>[Compare with first commit](https://github.com/pawamoy/mkdocs-manpage/compare/39a85476b514404f465011c18c3c13823734908f...1.0.0)</small>
