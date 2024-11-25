@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from duty.callables import mkdocs
+from duty.tools import mkdocs
 
 
 def test_plugin() -> None:
