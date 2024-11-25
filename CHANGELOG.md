@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [2.0.1](https://github.com/pawamoy/mkdocs-manpage/releases/tag/2.0.1) - 2024-11-25
+
+<small>[Compare with 2.0.0](https://github.com/pawamoy/mkdocs-manpage/compare/2.0.0...2.0.1)</small>
+
+### Build
+
+- Drop support for Python 3.8 ([ff2b8bb](https://github.com/pawamoy/mkdocs-manpage/commit/ff2b8bb3573c3c8d2691aac13b9c8bdaf5639ff1) by Timothée Mazzucotelli).
+
+### Bug Fixes
+
+- Fix usual encoding error on the annoying operating system ([3204f71](https://github.com/pawamoy/mkdocs-manpage/commit/3204f7111111ad78bb119fd1ae7ca20af13a08c7) by Timothée Mazzucotelli). [Issue-1](https://github.com/pawamoy/mkdocs-manpage/issues/1)
+
 ## [2.0.0](https://github.com/pawamoy/mkdocs-manpage/releases/tag/2.0.0) - 2024-03-31
 
 <small>[Compare with 1.0.0](https://github.com/pawamoy/mkdocs-manpage/compare/1.0.0...2.0.0)</small>
