@@ -33,7 +33,7 @@ dependencies = []
 [project.optional-dependencies]
 preprocess = [
     "beautifulsoup4>=4.12",
-    "lxml>=5.2",
+    "lxml>=5.3",
 ]
 
 [project.urls]
