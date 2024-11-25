@@ -22,9 +22,7 @@ def to_remove(tag: Tag) -> bool:
     if tag.name in {"img", "svg"}:
         return True
     # Remove permalinks.
-    if tag.name == "a" and ("headerlink" in tag.get("class", "") or tag.img and to_remove(tag.img)):
-        return True
-    return False
+    return tag.name == "a" and ("headerlink" in tag.get("class", "") or (tag.img and to_remove(tag.img)))
 
 
 def preprocess(soup: Soup, output: str) -> None:  # noqa: ARG001

@@ -46,11 +46,11 @@ def preprocess(html: str, module_path: str, output: str) -> str:
         ) from error
     try:
         module = _load_module(module_path)
-    except Exception as error:  # noqa: BLE001
+    except Exception as error:
         raise PluginError(f"Could not load module: {error}") from error
     soup = BeautifulSoup(html, "lxml")
     try:
         module.preprocess(soup, output)
-    except Exception as error:  # noqa: BLE001
+    except Exception as error:
         raise PluginError(f"Could not pre-process HTML: {error}") from error
     return str(soup)

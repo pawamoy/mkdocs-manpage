@@ -182,8 +182,8 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
                     "-o",
                     str(output_file),
                 ]
-                pandoc_process = subprocess.run(
-                    pandoc_command,  # noqa: S603
+                pandoc_process = subprocess.run(  # noqa: S603
+                    pandoc_command,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                     text=True,
