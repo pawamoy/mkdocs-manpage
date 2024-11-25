@@ -16,6 +16,7 @@
 /htmlcov/
 /site/
 /share/
+uv.lock
 
 # cache
 .cache/
