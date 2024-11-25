@@ -158,7 +158,7 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
             section_header = page.get("header", section_headers.get(section, section_headers["1"]))
             title = page.get("title", self.mkdocs_config.site_name)
 
-            with tempfile.NamedTemporaryFile("w", prefix="mkdocs_manpage_", suffix=".1.html") as temp_file:
+            with tempfile.NamedTemporaryFile("w", prefix="mkdocs_manpage_", suffix=".1.html", encoding="utf8") as temp_file:
                 temp_file.write(html)
                 pandoc_variables = [
                     f"title:{title}",
