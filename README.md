@@ -1,5 +1,8 @@
 # MkDocs Manpage
 
+> [!WARNING]
+> This project is in maintenance mode. I'm now dedicating my time to [Zensical](https://zensical.org/). Feel free to reach out for a responsible transfer of maintainership.
+
 [![ci](https://github.com/pawamoy/mkdocs-manpage/workflows/ci/badge.svg)](https://github.com/pawamoy/mkdocs-manpage/actions?query=workflow%3Aci)
 [![documentation](https://img.shields.io/badge/docs-mkdocs-708FCC.svg?style=flat)](https://pawamoy.github.io/mkdocs-manpage/)
 [![pypi version](https://img.shields.io/pypi/v/mkdocs-manpage.svg)](https://pypi.org/project/mkdocs-manpage/)
