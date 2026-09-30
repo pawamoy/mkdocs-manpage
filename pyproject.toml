@@ -47,7 +47,7 @@ Gitter = "https://gitter.im/mkdocs-manpage/community"
 Funding = "https://github.com/sponsors/pawamoy"
 
 [project.entry-points."mkdocs.plugins"]
-manpage = "mkdocs_manpage.plugin:MkdocsManpagePlugin"
+manpage = "mkdocs_manpage._internal.plugin:MkdocsManpagePlugin"
 
 [tool.pdm.version]
 source = "call"

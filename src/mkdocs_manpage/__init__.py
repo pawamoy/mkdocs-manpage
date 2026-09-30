@@ -22,4 +22,17 @@ MkDocs plugin to generate a manpage from the documentation site.
 """
 
 from __future__ import annotations
-__all__: list[str] = []
+
+from mkdocs_manpage._internal.config import PageConfig, PluginConfig
+from mkdocs_manpage._internal.logger import PluginLogger, get_logger
+from mkdocs_manpage._internal.plugin import MkdocsManpagePlugin
+from mkdocs_manpage._internal.preprocess import preprocess
+
+__all__ = [
+    "MkdocsManpagePlugin",
+    "PageConfig",
+    "PluginConfig",
+    "PluginLogger",
+    "get_logger",
+    "preprocess",
+]

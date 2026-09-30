@@ -1,4 +1,20 @@
-"""MkDocs plugin that generates a manpage at the end of the build."""
+# SPDX-License-Identifier: ISC
+#
+# ISC License
+#
+# Copyright (c) 2023, Timothée Mazzucotelli and contributors
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
 
@@ -16,9 +32,9 @@ from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.exceptions import PluginError
 from mkdocs.plugins import BasePlugin
 
-from mkdocs_manpage.config import PluginConfig
-from mkdocs_manpage.logger import get_logger
-from mkdocs_manpage.preprocess import preprocess
+from mkdocs_manpage._internal.config import PluginConfig
+from mkdocs_manpage._internal.logger import get_logger
+from mkdocs_manpage._internal.preprocess import preprocess
 
 if TYPE_CHECKING:
     from typing import Any
@@ -28,16 +44,16 @@ if TYPE_CHECKING:
     from mkdocs.structure.pages import Page
 
 
-logger = get_logger(__name__)
+_logger = get_logger(__name__)
 
 
 def _log_pandoc_output(output: str) -> None:
     for line in output.split("\n"):
         if line.strip():
-            logger.debug(f"pandoc: {line.strip()}")
+            _logger.debug(f"pandoc: {line.strip()}")
 
 
-section_headers = {
+_section_headers = {
     "1": "User Commands",
     "2": "System Calls Manual",
     "3": "Library Functions Manual",
@@ -62,10 +78,10 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
     for more information about its plugin system.
     """
 
-    mkdocs_config: MkDocsConfig
+    _mkdocs_config: MkDocsConfig
 
-    def __init__(self) -> None:  # noqa: D107
-        self.html_pages: dict[str, dict[str, str]] = defaultdict(dict)
+    def __init__(self) -> None:
+        self._html_pages: dict[str, dict[str, str]] = defaultdict(dict)
 
     def _expand_inputs(self, inputs: list[str], page_uris: list[str]) -> list[str]:
         expanded: list[str] = []
@@ -89,7 +105,7 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
         Returns:
             The same, untouched config.
         """
-        self.mkdocs_config = config
+        self._mkdocs_config = config
         return config
 
     def on_files(self, files: Files, *, config: MkDocsConfig) -> Files | None:  # noqa: ARG002
@@ -123,8 +139,8 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
             return None
         for manpage in self.config.pages:
             if page.file.src_uri in manpage["inputs"]:
-                logger.debug(f"Adding page {page.file.src_uri} to manpage {manpage['output']}")
-                self.html_pages[manpage["output"]][page.file.src_uri] = html
+                _logger.debug(f"Adding page {page.file.src_uri} to manpage {manpage['output']}")
+                self._html_pages[manpage["output"]][page.file.src_uri] = html
         return html
 
     def on_post_build(self, config: MkDocsConfig, **kwargs: Any) -> None:  # noqa: ARG002
@@ -140,12 +156,12 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
             return
         pandoc = which("pandoc")
         if pandoc is None:
-            logger.debug("Could not find pandoc executable, trying to call 'pandoc' directly")
+            _logger.debug("Could not find pandoc executable, trying to call 'pandoc' directly")
             pandoc = "pandoc"
 
         for page in self.config.pages:
             try:
-                html = "\n\n".join(self.html_pages[page["output"]][input_page] for input_page in page["inputs"])
+                html = "\n\n".join(self._html_pages[page["output"]][input_page] for input_page in page["inputs"])
             except KeyError as error:
                 raise PluginError(str(error)) from error
 
@@ -155,11 +171,17 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
             output_file = Path(config.config_file_path).parent.joinpath(page["output"])
             output_file.parent.mkdir(parents=True, exist_ok=True)
             section = output_file.suffix[1:]
-            section_header = page.get("header", section_headers.get(section, section_headers["1"]))
-            title = page.get("title", self.mkdocs_config.site_name)
+            section_header = page.get("header") or _section_headers.get(section, _section_headers["1"])
+            title = page.get("title") or self._mkdocs_config.site_name
 
-            with tempfile.NamedTemporaryFile("w", prefix="mkdocs_manpage_", suffix=".1.html", encoding="utf8") as temp_file:
+            with tempfile.NamedTemporaryFile(
+                "w",
+                prefix="mkdocs_manpage_",
+                suffix=".1.html",
+                encoding="utf8",
+            ) as temp_file:
                 temp_file.write(html)
+                temp_file.flush()
                 pandoc_variables = [
                     f"title:{title}",
                     f"section:{section}",
@@ -187,7 +209,8 @@ class MkdocsManpagePlugin(BasePlugin[PluginConfig]):
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                     text=True,
+                    encoding="utf-8",
                     check=False,
                 )
             _log_pandoc_output(pandoc_process.stdout)
-            logger.info(f"Generated manpage {output_file}")
+            _logger.info(f"Generated manpage {output_file}")
