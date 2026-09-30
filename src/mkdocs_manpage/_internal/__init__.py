@@ -15,11 +15,3 @@
 # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-"""MkDocs Manpage package.
-
-MkDocs plugin to generate a manpage from the documentation site.
-"""
-
-from __future__ import annotations
-__all__: list[str] = []

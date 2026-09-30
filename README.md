@@ -4,9 +4,9 @@
 > This project is in maintenance mode. I'm now dedicating my time to [Zensical](https://zensical.org/). Feel free to reach out for a responsible transfer of maintainership.
 
 [![ci](https://github.com/pawamoy/mkdocs-manpage/workflows/ci/badge.svg)](https://github.com/pawamoy/mkdocs-manpage/actions?query=workflow%3Aci)
-[![documentation](https://img.shields.io/badge/docs-mkdocs-708FCC.svg?style=flat)](https://pawamoy.github.io/mkdocs-manpage/)
+[![documentation](https://img.shields.io/badge/docs-zensical-FF9100.svg?style=flat)](https://pawamoy.github.io/mkdocs-manpage/)
 [![pypi version](https://img.shields.io/pypi/v/mkdocs-manpage.svg)](https://pypi.org/project/mkdocs-manpage/)
-[![gitter](https://badges.gitter.im/join%20chat.svg)](https://app.gitter.im/#/room/#mkdocs-manpage:gitter.im)
+[![gitter](https://img.shields.io/badge/matrix-chat-4DB798.svg?style=flat)](https://app.gitter.im/#/room/#mkdocs-manpage:gitter.im)
 
 MkDocs plugin to generate a manpage from the documentation site.
 
@@ -137,3 +137,8 @@ export PERMALINK=false
 export SHOW_SOURCE=false
 mkdocs build
 ```
+
+## Sponsors
+
+<!-- sponsors-start -->
+<!-- sponsors-end -->

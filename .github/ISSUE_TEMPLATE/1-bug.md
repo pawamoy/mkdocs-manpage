@@ -50,7 +50,7 @@ PASTE TRACEBACK HERE
      redacting sensitive information. -->
 
 ```bash
-python -m mkdocs_manpage.debug  # | xclip -selection clipboard
+python -m mkdocs_manpage._internal.debug  # | xclip -selection clipboard
 ```
 
 PASTE MARKDOWN OUTPUT HERE
