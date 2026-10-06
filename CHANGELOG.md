@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [2.0.2](https://github.com/pawamoy/mkdocs-manpage/releases/tag/2.0.2) - 2026-10-06
+
+<small>[Compare with 2.0.1](https://github.com/pawamoy/mkdocs-manpage/compare/2.0.1...2.0.2)</small>
+
+### Build
+
+- Drop support for Python 3.10 ([8fadcdb](https://github.com/pawamoy/mkdocs-manpage/commit/8fadcdbfc2211870bd9ec0ebf52aa8567e070c13) by Timothée Mazzucotelli).
+
+### Code Refactoring
+
+- Move public modules under internal folder ([1611a76](https://github.com/pawamoy/mkdocs-manpage/commit/1611a766a94a23c9117d3302a405e6cb8568528a) by Timothée Mazzucotelli).
+
 ## [2.0.1](https://github.com/pawamoy/mkdocs-manpage/releases/tag/2.0.1) - 2024-11-25
 
 <small>[Compare with 2.0.0](https://github.com/pawamoy/mkdocs-manpage/compare/2.0.0...2.0.1)</small>
